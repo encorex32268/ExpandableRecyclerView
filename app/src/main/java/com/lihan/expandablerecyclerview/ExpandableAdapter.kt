@@ -20,7 +20,7 @@ class ExpandableAdapter(
         private const val VIEW_TYPE_ITEM = 2
     }
     private var isExpand = false
-
+    var onClick :(()->Unit)?= null
     override fun getItemViewType(position: Int): Int {
         return if (position == 0) VIEW_TYPE_HEADER else VIEW_TYPE_ITEM
     }
@@ -60,6 +60,11 @@ class ExpandableAdapter(
             }
             is ContentViewHolder-> {
                 holder.toBind(data.items[position-1])
+                holder.itemView.setOnClickListener {
+                    onClick?.let { it1 ->
+                        it1()
+                    }
+                }
             }
         }
     }
